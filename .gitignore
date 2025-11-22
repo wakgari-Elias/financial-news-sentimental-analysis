@@ -1,0 +1,111 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.manifest
+*.spec
+
+# =========================
+# Virtual Environment
+# =========================
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# =========================
+# Jupyter Notebook
+# =========================
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Data
+# =========================
+data/raw/
+data/processed/
+*.csv
+*.xlsx
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# PyLDAvis / other generated visualizations
+# =========================
+*.html
+*.png
+*.pdf
+*.svg
+
+# =========================
+# Databases
+# =========================
+*.sqlite
+*.db
+
+# =========================
+# NLP / NLTK / spaCy / HuggingFace data
+# =========================
+nltk_data/
+spacy_data/
+transformers_cache/
+huggingface_hub/
+__pycache__/
+
+# =========================
+# TA-Lib / PyNance / other financial libraries
+# =========================
+talib_data/
+pynance_cache/
+*.pickle
+*.pkl
+
+# =========================
+# Temporary / Backup Files
+# =========================
+*.bak
+*.tmp
+*.swp
+*.swo
+*~
+
+# =========================
+# Python coverage / testing
+# =========================
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+
+# =========================
+# Miscellaneous
+# =========================
+*.lock

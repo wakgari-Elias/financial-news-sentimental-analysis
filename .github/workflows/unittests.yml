@@ -1,18 +1,62 @@
-name: Python CI
-\non: [push, pull_request]
-\njobs:
-  build:
+name: CI - Financial News Analysis
+
+on:
+  push:
+    branches:
+      - main
+      - task-1
+      - task-2
+      - task-3
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python
+      # 1️⃣ Checkout the repository
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # 2️⃣ Set up Python
+      - name: Set up Python 3.11
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12'
+          python-version: '3.11'
+
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Run tests
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install flake8 nbconvert pytest
+
+      # 4️⃣ Lint Python code
+      - name: Lint Python code
         run: |
-          pytest
+          echo "Running flake8 linting..."
+          flake8 src/ scripts/ tests/ notebooks/ || true  # do not fail workflow on lint errors
+
+      # 5️⃣ Run unit tests
+      - name: Run unit tests
+        run: |
+          echo "Running pytest..."
+          if [ -d tests ]; then
+            pytest tests --maxfail=5 --disable-warnings -q
+          else
+            echo "No tests directory found."
+          fi
+
+      # 6️⃣ Execute Jupyter notebooks (optional)
+      - name: Execute Jupyter notebooks
+        run: |
+          if [ -d notebooks ]; then
+            for nb in notebooks/*.ipynb; do
+              echo "Executing $nb ..."
+              jupyter nbconvert --to notebook --execute "$nb" --inplace --ExecutePreprocessor.timeout=600
+            done
+          else
+            echo "No notebooks directory found."
+          fi

@@ -175,4 +175,97 @@ pytest tests/
 3. Use notebooks for exploratory analysis
 4. Push changes and create pull requests to merge into main
 
+## Task 2: Quantitative Analysis Using Stock Data
+## Overview
 
+Task 2 focuses on quantitative financial analysis. We load historical stock data, calculate technical indicators using TA-Lib, perform basic financial metrics with PyNance, and visualize the results. This task complements Task 1’s textual analysis with numerical stock insights.
+
+File Structure
+src/
+│
+├─ loader_task2.py       # Load multiple stock CSVs into pandas DataFrames
+├─ indicators_task2.py   # Compute technical indicators (SMA, RSI, MACD, Volatility)
+├─ analytics_task2.py    # Perform analysis, generate plots, save results
+├─ utils_task2.py        # Helper functions for plotting and saving outputs
+notebooks/
+│
+├─ task2_stock_analysis.ipynb  # Jupyter notebook demonstrating Task 2 analysis
+data/
+│
+├─ raw/
+│   ├─ AAPL.csv
+│   ├─ AMZN.csv
+│   ├─ GOOG.csv
+│   ├─ META.csv
+│   ├─ MSFT.csv
+│   └─ NVDA.csv
+
+## Getting Started
+
+## Install required libraries:
+
+pip install pandas numpy matplotlib seaborn TA-Lib pynance yfinance
+
+
+⚠ Note: TA-Lib requires the C library. Download the correct .whl for your Python version and install via:
+
+pip install TA_Lib‑0.6.8‑cp312‑cp312‑win_amd64.whl
+
+Loading Stock Data
+
+Example snippet to load multiple stock CSVs:
+
+from src.loader_task2 import load_stock_csvs
+
+file_paths = "data/raw/*.csv"
+stock_data = load_stock_csvs(file_paths)
+
+# Check loaded data
+for name, df in stock_data.items():
+    print(name, df.columns.tolist())
+
+Calculating Technical Indicators
+
+Use TA-Lib to compute SMA, RSI, MACD, and Volatility:
+
+from src.indicators_task2 import add_technical_indicators
+
+for name, df in stock_data.items():
+    df = add_technical_indicators(df)
+    stock_data[name] = df
+
+# Preview
+print(stock_data["AAPL"].head())
+
+## Visualization
+
+Example: Plot Close price with SMA lines:
+
+from src.utils_task2 import plot_price_sma
+
+plot_price_sma(stock_data["AAPL"], out_path="outputs/AAPL_price_sma.png")
+
+
+Example: RSI Plot:
+
+from src.utils_task2 import plot_rsi
+
+plot_rsi(stock_data["AAPL"], out_path="outputs/AAPL_rsi.png")
+
+## KPIs and Goals
+
+Load multiple stock datasets into a structured format.
+
+Calculate standard technical indicators accurately.
+
+Visualize results to reveal trends, spikes, and trading signals.
+
+Maintain modular, reusable code in src/.
+
+## Notes
+
+Each file in src/ is designed to be independent and reusable.
+
+Use the notebook task2_stock_analysis.ipynb for a step-by-step demonstration of Task 2.
+
+Plots are saved to outputs/ for easy access and reporting.
